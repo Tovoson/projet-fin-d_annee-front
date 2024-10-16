@@ -1,0 +1,74 @@
+.m-formulaire{
+    flex: 3;
+    background-color: #e4e4e4dc;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // background-color: #fff;
+        height: 400px;
+        gap: 1rem;
+        border-radius: 10px;
+
+        .inputs{
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #c2c0c0dc;
+            padding: 1rem;
+            width: 22.5rem;
+            height: 16.7rem;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+
+            input{
+                padding: 0.5rem;
+                outline: none;
+                border: 1px solid #c2c0c0dc;
+                width: 70%;
+
+            }
+        }
+
+        .radios{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: space-between;
+          
+
+            span{
+                font-size: 14px;
+                color: #5a5a5a;
+            }
+
+            label{
+                font-size: 13px;
+            }
+
+            .element1{
+                padding: 0.5rem;
+                width: 9rem;
+                border: 1px solid #c2c0c0dc;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+            }
+
+            .element2{
+                padding: 0.5rem;
+                width: 9rem;
+                border: 1px solid #c2c0c0dc;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    }
+}

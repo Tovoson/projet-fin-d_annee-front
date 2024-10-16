@@ -8,6 +8,8 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router-dom";
+import Formulaire from './composants/formulaire/Formulaire'
+import Recherche from './composants/recherche/Recherche'
 
 const Layout = () =>{
   return(
@@ -35,6 +37,9 @@ function App() {
         },
         {path: "/dash",
         element: <div>dash</div>,
+        },
+        {path: "/nouveau_etudiant",
+        element: <Formulaire/>,
         }
         
       ]

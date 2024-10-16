@@ -5,7 +5,12 @@ import MonitorIcon from '@mui/icons-material/Monitor';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
 const Gauche = () => {
+    const navigate = useNavigate()
+    const rediriger = () =>{
+        navigate('./utilisateur')
+    }
     return (
         <div className="m-gauche">
             <div className="head">
@@ -19,7 +24,7 @@ const Gauche = () => {
                     <h2>Overview</h2>
                 </div>
                 <div className="items">
-                    <div>
+                    <div onClick={rediriger}>
                         <PersonIcon className='icon'/>
                         <p>Utilisateur</p>
                     </div>
