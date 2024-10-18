@@ -8,6 +8,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 const Gauche = () => {
     const navigate = useNavigate()
+
+    const dashboard = () =>{
+        navigate('/')
+    }
     const rediriger = () =>{
         navigate('./utilisateur')
     }
@@ -23,19 +27,21 @@ const Gauche = () => {
                 <div className="titre">
                     <h2>Overview</h2>
                 </div>
+                
                 <div className="items">
-                    <div onClick={rediriger}>
-                        <PersonIcon className='icon'/>
-                        <p>Utilisateur</p>
-                    </div>
-                    <div>     
-                        <MonitorIcon className='icon'/>
-                        <p>Matériel</p>
-                    </div>
-                    <div> 
+                    <div onClick={dashboard}> 
                         <DashboardIcon className='icon'/>
                         <p>Tableau de bord</p>
                     </div>
+                    <div onClick={rediriger}>     
+                        <MonitorIcon className='icon'/>
+                        <p>Matériel</p>
+                    </div>
+                    <div >
+                        <PersonIcon className='icon'/>
+                        <p>Utilisateur</p>
+                    </div>
+                    
                 </div>
             </div>
             <div className="footer">

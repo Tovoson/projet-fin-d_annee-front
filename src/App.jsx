@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import Formulaire from './composants/formulaire/Formulaire'
 import Recherche from './composants/recherche/Recherche'
+import Login from './composants/login/Login'
+import Dashbords from './composants/dashboard/Dashbord'
 
 const Layout = () =>{
   return(
@@ -23,6 +25,8 @@ const Layout = () =>{
 
 function App() {
 
+  const user = true;
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -35,8 +39,8 @@ function App() {
        { path: "/device",
         element: <div>device</div>,
         },
-        {path: "/dash",
-        element: <div>dash</div>,
+        {path: "/",
+        element: <Dashbords/>,
         },
         {path: "/nouveau_etudiant",
         element: <Formulaire/>,
@@ -48,7 +52,11 @@ function App() {
  
   return (
     <div className='MyApp'>
-      <RouterProvider router={router} /> 
+      { user 
+        ? 
+        <RouterProvider router={router} />
+        : <Login/>
+      } 
     </div>
   )
 }

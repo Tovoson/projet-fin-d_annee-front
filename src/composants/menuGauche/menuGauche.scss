@@ -1,6 +1,6 @@
 .m-gauche{
     flex: 0.7;
-    margin: 1rem;
+    margin: 0.2rem;
     display: flex;
     flex-direction: column;
 
@@ -53,6 +53,7 @@
                 align-items: center;
                 cursor: pointer;
                 gap: 0.5rem;
+                border-bottom: 1px solid #616368;
 
                 .icon{
                     width: 1.1rem;
@@ -64,6 +65,14 @@
                     font-size: 12px;
                     align-items: center;
                 }
+            }
+
+            div:nth-child(1){
+                border-top: 1px solid #616368;
+            }
+
+            div:hover{
+                background-color: #ececec;
             }
         }
     }
@@ -101,5 +110,75 @@
         }
     }
 
+}
 
+@media (max-width: 1200px){
+    .m-gauche{
+        flex: 0.7;
+        margin: 0.2rem;
+        display: flex;
+        flex-direction: column;
+        
+        .head{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 0.5;
+    
+    
+            .logo{
+                
+                justify-content: center;
+                object-fit: cover;
+    
+                img{
+                    align-items: center;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+    
+            h1{
+                display: none;
+            }
+        }
+
+        .listes{
+            display: flex;
+            flex-direction: column;
+            margin: 0.5rem;
+            flex: 3;
+    
+            .items{
+                display: flex;
+                flex-direction: column;
+                
+                div{
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+                    gap: 0.5rem;
+                    border-bottom: none;
+    
+                    .icon{
+                        width: 1.1rem;
+                        height: 1.1rem;
+                        align-items: center;
+                    }
+    
+                    p{
+                        display: none;
+                    }
+                }
+    
+                div:nth-child(1){
+                    border-top: none;
+                }
+    
+                div:hover{
+                    background-color: #ececec;
+                }
+            }
+        }
+    }
 }
