@@ -66,7 +66,7 @@ const Mouvements = () => {
                 </div>
             </div>
             <div className="tableau">
-                <TableauEmprunt setAfficheModale = {setAfficheModale}/>
+                <TableauEmprunt setAfficheModale = {setAfficheModale} val ={true} />
             </div>
             < Stat 
                     listes = {listes}

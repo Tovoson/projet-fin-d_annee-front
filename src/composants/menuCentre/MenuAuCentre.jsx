@@ -6,7 +6,7 @@ import Recherche from '../recherche/Recherche';
 const Centre = () => {
     return (
         <div className="m-centre">
-            <Recherche/>
+            <Recherche val ={true} />
             
             <div className="tableau">
                 <DenseTable 
