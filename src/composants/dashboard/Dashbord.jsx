@@ -1,37 +1,37 @@
 import React from 'react'
 import './dashboard.scss'
-import Recherche from '../recherche/Recherche'
+import Stat from '../stat/Stat'
+import Charts from './figure/Chart'
 
 const Dashbords = () => {
+    const listes = [
+        {
+            id : 1,
+            img : "./icons8-tous-96.png",
+            nbr : 20,
+            texte : "matériel emprunté le plus"
+        },
+        {
+            id : 2,
+            img : "./icons8-ok-188.png",
+            nbr : 40,
+            texte : "étudiant qui emprunte le plus"
+        },
+        {
+            id : 3,
+            img : "./icons8-en-attente-100.png",
+            nbr : 70,
+            texte : "admin qui fait emprunter le plus"
+        }
+    ]
+
     return (
         <div className="dashboard">
-            <div className="composant1">
-                <div className='Tous'>
-                    <img src="./icons8-tous-96.png" alt="" />
-                    <div className="texte">
-                        <span>58</span>
-                        <span>Toutes les matériels</span>
-                    </div>
-                </div>
-                <div className='Tous'>
-                    <img src="./icons8-ok-188.png" alt="" />
-                    <div className="texte">
-                        <span>58</span>
-                        <span>Matériels dispo</span>
-                    </div>
-                </div>
-                <div className='Tous'>
-                    <img src="./icons8-en-attente-100.png" alt="" />
-                    <div className="texte">
-                        <span>58</span>
-                        <span>Utilisé</span>
-                    </div>
-                </div>
-                
-                
-            </div>
+            < Stat 
+                    listes = {listes}
+                />
             <div className="stat">
-                stat
+                <Charts/>
             </div>
             <div className="composant3">
                 comp3

@@ -1,39 +1,58 @@
-.m-droite{
-    flex: 1;
-    padding: 1rem 0.5rem;
+.cont{
     display: flex;
     flex-direction: column;
-    background-color: whitesmoke;
-    gap: 1rem;
+    
 
-    .avatar{
-        flex: 0.25;
-        height: 2.5rem;
+    .dots{
         display: flex;
-        // justify-content: center;
-        align-items: center;
-        gap: 1rem;
-
-        .cercle{
-            border: 1px solid #c2c0c0dc;
-            width: 39px;
-            height: 39px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            img{
-                width: 35px;
-                height: 35px;
-                object-fit: cover;
-                border-radius: 50%;
-            }
-        }
-        span{
-            font-size: 12px;
-        }
+        position: absolute;
+        right: 5px;
+        margin-top: 1.5rem;
+        cursor: pointer;
     }
+        .avatar{
+            flex: 0.15;
+            height: 2.5rem;
+            display: flex;
+            // justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            background-color: whitesmoke;
+
+            .cercle{
+                border: 1px solid #c2c0c0dc;
+                width: 39px;
+                height: 39px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img{
+                    width: 35px;
+                    height: 35px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
+
+            span{
+                font-size: 12px;
+            }
+       
+        }
+    
+
+    .m-droite{
+        flex: 1;
+        padding: 1rem 0.5rem;
+        display: flex;
+        flex-direction: column;
+        background-color: whitesmoke;
+        gap: 1rem;
+        // padding-top: 7rem;
+        
+        
     .contenu{
         flex: 3;
         background-color: #fff;
@@ -41,7 +60,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-
+        
         .img{
             display: flex;
             flex-direction: column;
@@ -95,4 +114,35 @@
 
     }
 
+}
+
+.m-dt{
+    flex: 1.5;
+    padding: 1rem 0.5rem;
+    width: 60px;
+    background-color: whitesmoke;
+
+    .cercle{
+        border: 1px solid #c2c0c0dc;
+        width: 39px;
+        height: 39px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 17px;
+        right: 30px;
+
+        img{
+            width: 35px;
+            height: 35px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+
+    }
+        
+}
 }

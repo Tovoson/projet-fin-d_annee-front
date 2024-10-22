@@ -9,7 +9,12 @@ const Centre = () => {
             <Recherche/>
             
             <div className="tableau">
-                <DenseTable />
+                <DenseTable 
+                    IdMat = {'idMats'} 
+                    Nom = {'Nom'} 
+                    Nombre = {"Nombre"} 
+                    Status = {"Status"}
+                    DateEnr = {"Date Enr"}/>
             </div>
         </div>
     )

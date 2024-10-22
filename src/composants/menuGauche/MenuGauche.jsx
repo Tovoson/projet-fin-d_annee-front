@@ -6,6 +6,8 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
+import ArchiveIcon from '@mui/icons-material/Archive';
 const Gauche = () => {
     const navigate = useNavigate()
 
@@ -14,6 +16,12 @@ const Gauche = () => {
     }
     const rediriger = () =>{
         navigate('./utilisateur')
+    }
+    const move = () =>{
+        navigate('./move')
+    }
+    const archives = () =>{
+        navigate('./archive')
     }
     return (
         <div className="m-gauche">
@@ -37,9 +45,13 @@ const Gauche = () => {
                         <MonitorIcon className='icon'/>
                         <p>Matériel</p>
                     </div>
-                    <div >
-                        <PersonIcon className='icon'/>
-                        <p>Utilisateur</p>
+                    <div onClick={move}>
+                        <SettingsBackupRestoreIcon className='icon'/>
+                        <p>Mouvements</p>
+                    </div>
+                    <div onClick={archives}>
+                        <ArchiveIcon className='icon'/>
+                        <p>Archive</p>
                     </div>
                     
                 </div>

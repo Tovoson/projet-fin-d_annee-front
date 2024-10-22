@@ -9,31 +9,33 @@ import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-function createData(Matr, Nom, niveau,role, tel, dates) {
-  return { Matr, Nom, niveau, tel, role, dates };
+function createData(Id, Nom, nbr, status, date) {
+  return { Id, Nom, nbr, status, date };
 }
 
 const rows = [
-  createData('2296', 'Mara Tovoson', "M1",'Etudiant', 23421, 2024),
-  createData('Ice cream sandwich', 237, 9.0,'enseignant', 37, 4.3),
+  createData('1', 'Projecteur', 6, 'dispo', 2024),
+  createData('2', "stylo",3, 'nonDispo', 2022),
   
 ];
 
-export default function DenseTable() {
-    const navigate = useNavigate()
-  const handleEditClick = (Matr, Nom, niveau, role, tel) => {
-    // Rediriger vers la page d'édition et passer les données via `state`
-    navigate(`../nouveau_etudiant`, { 
-        state: { 
-            Matric: Matr,
-            Noms: Nom,
-            niveaux: niveau,
-            roles : role,
-            tels : tel
-        }
-    });
 
-};
+
+export default function DenseTable({IdMat, Nom, Nombre, Status, DateEnr}) {
+    const navigate = useNavigate()
+    const handleEditClick = (Nom, nbr, status) => {
+      // Rediriger vers la page d'édition et passer les données via `state`
+      navigate(`../nouveau_etudiant`, { 
+          state: { 
+              noms: Nom,
+              nbrs : nbr,
+              stat : status
+          }
+      });
+
+      console.log("state envoyé")
+
+    };
 
   return (
     <TableContainer 
@@ -42,31 +44,30 @@ export default function DenseTable() {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Matricule</TableCell>
-            <TableCell align="right">Nom</TableCell>
-            <TableCell align="right">Niveau</TableCell>
-            <TableCell align="right">Role</TableCell>
-            <TableCell align="right">Phone</TableCell>
-            <TableCell align="right">Date d'enr</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell>{IdMat}</TableCell>
+            <TableCell align="right">{Nom}</TableCell>
+            <TableCell align="right">{Nombre}</TableCell>
+            <TableCell align="right">{Status}</TableCell>
+            <TableCell align="right">{DateEnr}</TableCell>
+
+            <TableCell align="center">Actions</TableCell> 
           </TableRow>
         </TableHead>
         <TableBody >
           {rows.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.Id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.Matr}
+                {row.Id}
               </TableCell>
               <TableCell align="right">{row.Nom}</TableCell>
-              <TableCell align="right">{row.niveau}</TableCell>
-              <TableCell align="right">{row.role}</TableCell>
-              <TableCell align="right">{row.tel}</TableCell>
-              <TableCell align="right">{row.dates}</TableCell>
+              <TableCell align="right">{row.nbr}</TableCell>
+              <TableCell align="right">{row.status}</TableCell>
+              <TableCell align="right">{row.date}</TableCell>
               <TableCell align="right">
-                <Button variant="contained" className='btn_modifier'onClick={handleEditClick(row.Matr, row.Nom, row.niveau, row.role, row.tel )}>Modifier</Button>&nbsp;
+                <Button variant="contained" className='btn_modifier'onClick={() => handleEditClick(row.Nom, row.nbr, row.status )}>Modifier</Button>&nbsp;
                 <Button variant="contained" className='btn_suppr'>Supprimer</Button>
               </TableCell>
             </TableRow>
@@ -76,3 +77,4 @@ export default function DenseTable() {
     </TableContainer>
   );
 }
+

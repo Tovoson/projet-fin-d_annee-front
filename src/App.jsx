@@ -9,9 +9,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Formulaire from './composants/formulaire/Formulaire'
-import Recherche from './composants/recherche/Recherche'
 import Login from './composants/login/Login'
 import Dashbords from './composants/dashboard/Dashbord'
+import Mouvements from './composants/mouvements/Mouvements'
+import Archive from './composants/archive/Archive'
 
 const Layout = () =>{
   return(
@@ -44,6 +45,12 @@ function App() {
         },
         {path: "/nouveau_etudiant",
         element: <Formulaire/>,
+        },
+        {path: "/move",
+        element: <Mouvements/>,
+        },
+        {path: "/archive",
+        element: <Archive/>,
         }
         
       ]

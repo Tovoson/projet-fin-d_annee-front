@@ -5,7 +5,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import { useNavigate } from 'react-router-dom';
 
 
-const Recherche = () => {
+const Recherche = ({val}) => {
     const navigate = useNavigate()
     const rediriger = () =>{
         navigate('../nouveau_etudiant')
@@ -16,12 +16,14 @@ const Recherche = () => {
                 <SearchIcon className="icon"/>
                 <input type="text" placeholder='Rechercher ...'/>
             </div>
+            { val ? <>
             <div className="affiche">
-            <div className="texte">
-                <h2>On peut voir tous les Utilisateur 
-                    <br /> dans l'établissement ici</h2>
+                <div className="texte">
+                    <h2>On peut voir tous les Utilisateur 
+                        <br /> dans l'établissement ici</h2>
+                </div>
             </div>
-            </div>
+
             <div className='options'>
                 <div className="ajouter" onClick={rediriger}>
                     <PersonAddAlt1Icon className='icon_ajout'/>
@@ -34,6 +36,7 @@ const Recherche = () => {
                     ajout
                 </div>
             </div>
+        </> : ""}
         </>
     )
 }
