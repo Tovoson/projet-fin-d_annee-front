@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Recherche = ({val}) => {
     const navigate = useNavigate()
     const rediriger = () =>{
-        navigate('../nouveau_etudiant')
+        navigate('../ajoutMateriel')
     }
     return (
         <>

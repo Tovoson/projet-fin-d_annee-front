@@ -43,7 +43,7 @@ function App() {
         {path: "/",
         element: <Dashbords/>,
         },
-        {path: "/nouveau_etudiant",
+        {path: "/ajoutMateriel",
         element: <Formulaire/>,
         },
         {path: "/move",
@@ -51,7 +51,10 @@ function App() {
         },
         {path: "/archive",
         element: <Archive/>,
-        }
+        },
+        {path: "/ModifierMateriel/:id",
+          element: <Formulaire/>,
+        },
         
       ]
     },

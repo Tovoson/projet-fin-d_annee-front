@@ -3,6 +3,7 @@ import './formulaire.scss'
 import Recherche from '../recherche/Recherche'
 import {Button} from '@mui/material'
 import { useLocation } from 'react-router-dom';
+import AxiosInstance from '../Axios';
 
 
 const Formulaire = () => {
@@ -27,6 +28,19 @@ const Formulaire = () => {
         console.log('Qté:', qte);
         console.log('Disponibilité:', dispo);
         console.log(Date.now());
+
+        AxiosInstance.post('materiel/',{
+            nom_materiel: nom,
+            nombre: qte,
+            id_admin: 'Tovoson_Admin',
+            status: dispo
+            }
+        ).then(response => {
+            console.log('Réponse réussie:', response);
+        })
+        .catch(error => {
+            console.log('Erreur:', error.response.data);  // Affiche les détails de l'erreur
+        });
     }
 
     const handleModifier = () =>{
@@ -55,7 +69,7 @@ const Formulaire = () => {
                         placeholder='text' 
                         value={qte}
                         onChange={(e) => setQte(e.target.value)}
-                        placeholder = 'qt'
+                        
                     />
 
                     <select 
@@ -64,8 +78,9 @@ const Formulaire = () => {
                         value = {dispo}
                         onChange={(e) => setDispo(e.target.value)}
                     >
-                        <option value="Disponible">Disponible</option>
-                        <option value="nonDispo">Non disponible</option>
+                        <option value="disponible">Disponible</option>
+                        <option value="utilise">Utilisé</option>
+                        <option value="rendu">Rendu</option>
                     </select>
                     <Button 
                         variant='contained' 
