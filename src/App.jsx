@@ -17,7 +17,7 @@ import Archive from './composants/archive/Archive'
 const Layout = () =>{
   return(
     <>
-      <Gauche/>
+      {/* <Gauche/> */}
       <Outlet/>
       <Droite/>
     </>
