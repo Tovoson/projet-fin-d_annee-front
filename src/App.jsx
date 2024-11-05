@@ -34,11 +34,11 @@ function App() {
       element: <Layout/>,
       children: [
        {
-        path: "/Utilisateur",
+        path: "/liste",
         element: <Centre/>,
         },
        { path: "/device",
-        element: <div>device</div>,
+        element: <Centre/>,
         },
         {path: "/",
         element: <Dashbords/>,

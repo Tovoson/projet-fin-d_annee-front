@@ -22,6 +22,30 @@
 
     .tableau{
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
         
+        .ajouter{
+            display: flex;
+            background-color: #fff;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            color: rgb(45, 45, 189);
+            width: 200px;
+    
+            .icon_ajout{
+                width: 20px;
+                height: 20px;
+            }
+    
+            span{
+                font-size: 14px;
+            }
+    
+        }
     }
 }

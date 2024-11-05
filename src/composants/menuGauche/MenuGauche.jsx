@@ -14,8 +14,8 @@ const Gauche = () => {
     const dashboard = () =>{
         navigate('/')
     }
-    const rediriger = () =>{
-        navigate('./utilisateur')
+    const redirigerDevice = () =>{
+        navigate('./device')
     }
     const move = () =>{
         navigate('./move')
@@ -41,7 +41,7 @@ const Gauche = () => {
                         <DashboardIcon className='icon'/>
                         <p>Tableau de bord</p>
                     </div>
-                    <div onClick={rediriger}>     
+                    <div onClick={redirigerDevice}>     
                         <MonitorIcon className='icon'/>
                         <p>Matériel</p>
                     </div>
@@ -56,7 +56,7 @@ const Gauche = () => {
                     
                 </div>
             </div>
-            <div className="footer">
+            {/* <div className="footer">
                 <div className="titre">
                     <h2>Paramètre</h2>
                 </div>
@@ -70,7 +70,7 @@ const Gauche = () => {
                         <span>Deconnecter</span>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
