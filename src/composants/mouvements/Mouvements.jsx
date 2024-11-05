@@ -42,7 +42,7 @@ const Mouvements = () => {
     const GetAllData = () =>{
         AxiosInstance.get('utilisation/').then((res)=>{
             console.log(res.data)
-            setAllMyData(res.data)
+            setAllMyData(res.data.non_rendus)
             // setLoading(false)
         })
         .catch((error) => {
@@ -129,28 +129,7 @@ const Mouvements = () => {
             }
         }
     };
-
-    const listes = [
-        {
-            id : 1,
-            img : "./icons8-tous-96.png",
-            nbr : 20,
-            texte : "matériel emprunté le plus"
-        },
-        {
-            id : 2,
-            img : "./icons8-ok-188.png",
-            nbr : 40,
-            texte : "étudiant qui emprunte le plus"
-        },
-        {
-            id : 3,
-            img : "./icons8-en-attente-100.png",
-            nbr : 70,
-            texte : "admin qui fait emprunter le plus"
-        }
-    ]
-
+ 
     
     return (
         <div className="contenu">
@@ -198,7 +177,7 @@ const Mouvements = () => {
                         <select 
                             id="device" 
                             name="device"
-                            disabled = { disabled }
+                            disabled = { true }
                             value = {dispo}
                             onChange={(e) => setDispo(e.target.value)}
                             >
@@ -242,8 +221,8 @@ const Mouvements = () => {
                     </div>
                 </div>
                 <div className="btn">
-                    <Button variant='contained' onClick={handleValide} disabled = {disabled}>Valider</Button>
-                    <Button variant='contained' sx={{ backgroundColor: '#d0e1ff', color : '#1a3d7c'}}>Reinitialiser</Button>
+                    <Button variant='contained' onClick={handleValide} disabled = {disabled} >Valider</Button>
+                    <Button variant='contained' sx={{ backgroundColor: '#d0e1ff', color : '#1a3d7c'}} type='reset'>Reinitialiser</Button>
                 </div>
             </div>
             <div className="tableau">
@@ -255,7 +234,7 @@ const Mouvements = () => {
                 />
             </div>
             < Stat 
-                    listes = {listes}
+                    
                 />
             
             {afficheModale ? 

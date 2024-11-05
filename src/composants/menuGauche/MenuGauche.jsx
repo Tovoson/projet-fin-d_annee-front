@@ -29,7 +29,7 @@ const Gauche = () => {
                 <div className="logo">
                     <img src="./icons8-g-48.png" alt="" />
                 </div>
-                <h1>estion pédagogique</h1>
+                <h1>estion des matériels pédagogique</h1>
             </div>
             <div className="listes">
                 <div className="titre">

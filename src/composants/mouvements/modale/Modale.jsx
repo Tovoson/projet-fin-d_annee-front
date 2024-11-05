@@ -9,16 +9,18 @@ const ConfirmationModal = ({afficheModale, onClose, val, id, actualiserData }) =
 
   useEffect(() => {
     if (id ) {
-      console.log("mon id " + id);
+      console.log("idUtils:", id.idAdmin);
+      console.log("Nom:", id.id_materiel);
+      console.log("Téléphone:", id.idUtils);
     }
     console.log('rien')
   }, [id]);
 
   const handleConfirm = () => {
    
-      AxiosInstance.put(`utilisation/${id}/`,{
-          id_admin : 1,
-          id_materiel : mat,
+      AxiosInstance.put(`utilisation/${id.idUtils}/`,{
+          id_admin : id.idAdmin,
+          id_materiel : id.id_materiel,
           date_fin_prevu: inputValue
           }
           
@@ -31,6 +33,7 @@ const ConfirmationModal = ({afficheModale, onClose, val, id, actualiserData }) =
               draggable: true,
               progress: undefined,
           });
+          onClose();
       })
       .catch(error => {
           console.log('Erreur:', error.response.data);

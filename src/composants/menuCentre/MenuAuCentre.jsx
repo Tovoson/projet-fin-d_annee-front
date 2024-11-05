@@ -41,7 +41,7 @@ const Centre = () => {
             <div className="tableau">
                 <div className="ajouter" onClick={rediriger}>
                     <PersonAddAlt1Icon className='icon_ajout'/>
-                    <span>Nouveau étudiant</span>
+                    <span>Nouveau matériel</span>
                 </div>
                 {loading ? 
                     <h2>Données en chargement ...</h2>

@@ -113,7 +113,7 @@ const Formulaire = () => {
 
     return (
         <div className="m-formulaire">
-            <Recherche/>
+        
             <h1>{ MyId ? "Modifier les matériels" : "ajouter Matériel"}</h1>
             <div className="form">
                 <div className="inputs">
@@ -139,8 +139,8 @@ const Formulaire = () => {
                         onChange={(e) => setDispo(e.target.value)}
                     >
                         <option value="disponible">Disponible</option>
-                        <option value="utilise">Utilisé</option>
-                        <option value="rendu">Rendu</option>
+                        {/* <option value="utilise">Utilisé</option>
+                        <option value="rendu">Rendu</option> */}
                     </select>
                     <Button 
                         variant='contained' 
