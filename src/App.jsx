@@ -18,8 +18,6 @@ const Layout = () =>{
   return(
     <>
       <Gauche/>
-      {/* <Outlet/> */}
-      {/* <Gauche/> */}
       <Outlet/>
       <Droite/>
     </>
