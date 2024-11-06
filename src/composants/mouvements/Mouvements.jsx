@@ -8,18 +8,24 @@ import AxiosInstance from '../Axios'
 import { toast, ToastContainer } from 'react-toastify'
 import Example from '../table/Tableau'
 import Tb2 from '../table/TableauEmp'
+import { creerUtilisation } from '../gererMateriel'
 
 const Mouvements = () => {
     const [afficheModale, setAfficheModale] = useState(false)
-    const [matr, setMatricule] = useState('')
-    const [noms, setNom] = useState('')
-    const [tel, setTel] = useState('')
-    const [niv, setNiveau] = useState('')
-    const [debut, setDebut] = useState('')
-    const [fin, setFin] = useState('')
-    const [nbr, setNbr] = useState('')
-    const [materiel, setMateriel] = useState('')
-    const [dispo, setDispo] = useState('')
+
+    const [formData, setFormData] = useState({
+        matricule: '',
+        nom: '',
+        telephone: '',
+        niveau: '',
+        nombre: '1',
+        date_debut: '',
+        date_fin_prevu: '',
+        id_materiels : '',
+    });
+
+    // const [id_materiels, setMateriel] = useState('')
+
     const [myData, setMyData] = useState()
     const [myAllData, setAllMyData] = useState()
     const [Id, setId] = useState('')
@@ -27,21 +33,25 @@ const Mouvements = () => {
     const [disabled, setDisabled] = useState(false)
     const val = true
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const [adminData, setAdminData] = useState(null);
+
+    useEffect(() => {
+        const storedAdmin = localStorage.getItem('admin');
+        if (storedAdmin) {
+        setAdminData(JSON.parse(storedAdmin));
+        }
+    }, []);
 
     const handleFermerModale = () =>{
         setAfficheModale(false)
     }
 
-    const handleClickElement = (nombres) =>{
-        // if(nombres < 1){
-        //     setDisabled(true)
-        // }
-        console.log(nombres)
-    }
-
     const GetAllData = () =>{
         AxiosInstance.get('utilisation/').then((res)=>{
-            console.log(res.data)
+            // console.log(res.data)
             setAllMyData(res.data.non_rendus)
             // setLoading(false)
         })
@@ -50,12 +60,20 @@ const Mouvements = () => {
         });
     }
 
-    const GetData = () =>{
-        AxiosInstance.get('materiel/').then((res)=>{
-            // console.log(res.data)
-            setMyData(res.data)
-            // setLoading(false)
-        })
+    const GetData = () => {
+        AxiosInstance.get('materiel/').then((res) => {
+            setMyData(res.data);
+            // Initialiser id_materiels avec le premier matériel si disponible
+            if (res.data && res.data.length > 0) {
+                setFormData(prev => ({
+                    ...prev,
+                    id_materiels: res.data[0].id_materiel
+                }));
+            }
+        }).catch(error => {
+            console.error("Erreur lors du chargement des matériels:", error);
+            setError("Erreur lors du chargement des matériels");
+        });
     }
 
     useEffect(()=>{
@@ -63,71 +81,56 @@ const Mouvements = () => {
         GetAllData();
     },[])
 
-    const handleValide = () =>{
-
-        const dateD = new Date(debut);
-        const dateF = new Date(fin);
-        const formattedDateDebut = `${String(dateD.getDate()).padStart(2, '0')}/${String(dateD.getMonth() + 1).padStart(2, '0')}/${dateD.getFullYear()} ${String(dateD.getHours()).padStart(2, '0')}h${String(dateD.getMinutes()).padStart(2, '0')}`;
-        const formattedDateFin = `${String(dateF.getDate()).padStart(2, '0')}/${String(dateF.getMonth() + 1).padStart(2, '0')}/${dateF.getFullYear()} ${String(dateF.getHours()).padStart(2, '0')}h${String(dateF.getMinutes()).padStart(2, '0')}`;
     
-        AxiosInstance.post('utilisation/',{
-            id_admin: 1,
-            id_materiel: Id,
-            matricule: matr,
-            nom: noms,
-            telephone: tel,
-            niveau: niv,
-            date_debut: dateD,
-            date_fin_prevu: dateF,
-            nombre: nbr,
-            estRendu: false,
-            
-            }
-        ).then(response => {
-            toast.success('utilisation ajouté avec succès !', {
-                autoClose: 3000, // Durée d'affichage en millisecondes
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-            });
-            console.log('Réponse réussie:', response);
-            navigate('../liste')
-            
-        })
-        .catch(error => {
-            console.log('Erreur:', error.response);
-            // toast.error('Une erreur est survenue.', {
-            //     autoClose: 5000,
-            //     hideProgressBar: false,
-            //     closeOnClick: true,
-            //     pauseOnHover: true,
-            //     draggable: true,
-            //     progress: undefined,
-            // });  // Affiche les détails de l'erreur
-        });
+    const handleSubmit = async (e) => {
+        setLoading(true);
+        setError('');
 
-    }
-
-    const handleChange = (event) => {
-        const selectedNomMateriel = event.target.value;
-        const selectedItem = myData.find(item => item.nom_materiel === selectedNomMateriel);
-        console.log('id_materiel ' +selectedItem.id_materiel)
-        setId(selectedItem.id_materiel)
-
-        if (selectedItem) {
-            console.log(selectedItem.nombre); // Affiche la valeur de 'nombre'
-            
-            setMateriel(selectedNomMateriel);
-            // Mettez à jour le disabled en fonction de la valeur de nombres
-            if (selectedItem.nombre < 1) {
-                setDisabled(true);
-
-            } else {
-                setDisabled(false);
-            }
+        if (!formData.id_materiels) {
+            setError('Veuillez sélectionner un matériel');
+            setLoading(false);
+            return;
         }
+    
+        if (!formData.matricule || !formData.nom || !formData.telephone || 
+            !formData.date_debut || !formData.date_fin_prevu) {
+            setError('Veuillez remplir tous les champs obligatoires');
+            setLoading(false);
+            return;
+        }
+    
+        const donnees = {
+            ...formData,
+            id_admin: adminData?.id_admin
+        };
+    
+        console.log(donnees.id_materiels)
+        const resultat = await creerUtilisation(donnees);
+    
+        if (resultat.success) {
+        //   onSuccess && onSuccess();
+          // Réinitialiser le formulaire
+          setFormData({
+            matricule: '',
+            nom: '',
+            telephone: '',
+            niveau: '',
+            nombre: '1',
+            date_debut: '',
+            id_materiels: myData[0]?.id_materiel || ''
+          });
+        } else {
+          setError(resultat.message);
+        }
+    
+        setLoading(false);
+      };    
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
  
     
@@ -139,19 +142,19 @@ const Mouvements = () => {
 
                         <select 
                             id="device" 
-                            name="device"
-                            value = {materiel}
-                            // onChange={(e) => setMateriel(e.target.value)}
+                            name="id_materiels"
+                            value = {formData.id_materiels}
                             onChange={handleChange}
+                            // onChange={(e) => console.log(e.target.value)}
+                            
                             >
                             {
                                 myData && myData.length > 0 && myData.map((myD) =>(
                                     <option 
-                                        value={myD.nom_materiel} 
+                                        value={myD.id_materiel} 
                                         key={myD.id_materiel}
-                                        // onClick={() => handleClickElement(myD.nombre)}
                                     >
-                                        {myD.nom_materiel}
+                                        {myD.nom_materiel} 
                                     </option>
                                 ))
                             }
@@ -159,31 +162,25 @@ const Mouvements = () => {
                         <input 
                             type="datetime-local" 
                             className='dates'
-                            value = {debut}
-                            onChange={(e) => setDebut(e.target.value)}
+                            name = 'date_debut'
+                            value = {formData.date_debut}
+                            onChange={handleChange}
                         />
                         <input 
                             type="datetime-local" 
                             className='dates'
-                            value = {fin}
-                            onChange={(e) => setFin(e.target.value)}
+                            name='date_fin_prevu'
+                            value = {formData.date_fin_prevu}
+                            onChange={handleChange}
                         />
                         <input 
                             type="number" 
                             placeholder="Nombre"
-                            value = {nbr}
-                            onChange={(e) => setNbr(e.target.value)}
+                            name = 'nombre'
+                            value = {formData.nombre}
+                            onChange={handleChange}
                         />
-                        <select 
-                            id="device" 
-                            name="device"
-                            disabled = { true }
-                            value = {dispo}
-                            onChange={(e) => setDispo(e.target.value)}
-                            >
-                            <option value="Disponible">Disponible</option>
-                            <option value="nonDispo">Non disponible</option>
-                        </select>
+                        
                     </div>
                     {/* --------------------------- */}
                     {/* --------------------------- */}
@@ -191,20 +188,22 @@ const Mouvements = () => {
                         <input 
                             type="text" 
                             placeholder='Matricule'
-                            value={matr}
-                            onChange={(e) => setMatricule(e.target.value)}
+                            name = 'matricule'
+                            value={formData.matricule}
+                            onChange={handleChange}
                         />
                         <input 
                             type="text" 
                             placeholder='Nom'
-                            value={noms}
-                            onChange={(e) => setNom(e.target.value)}
+                            name = 'nom'
+                            value={formData.nom}
+                            onChange={handleChange}
                         />
                         <select 
                             id="device" 
-                            name="device"
-                            value={niv}
-                            onChange={(e) => setNiveau(e.target.value)}
+                            name="niveau"
+                            value={formData.niveau}
+                            onChange={handleChange}
                             >
                             <option value="L1">L1</option>
                             <option value="L2">L2</option>
@@ -214,28 +213,33 @@ const Mouvements = () => {
                         </select>
                         <input 
                             type="tel" 
+                            name = 'telephone'
                             placeholder='telephone'
-                            value={tel}
-                            onChange={(e) => setTel(e.target.value)}
+                            value={formData.telephone}
+                            onChange={handleChange}
                         />
                     </div>
                 </div>
                 <div className="btn">
-                    <Button variant='contained' onClick={handleValide} disabled = {disabled} >Valider</Button>
+                    <Button 
+                        variant='contained' 
+                        onClick={handleSubmit} 
+                        // disabled = {loading || parseInt(formData.nombre) > parseInt(materiel.nombre)} 
+                    >
+                        {loading ? 'En cours...' : 'Valider'}
+                    </Button>
                     <Button variant='contained' sx={{ backgroundColor: '#d0e1ff', color : '#1a3d7c'}} type='reset'>Reinitialiser</Button>
                 </div>
+                {error && <div className="error-message">{error}</div>}
             </div>
             <div className="tableau">
-                {/* <TableauEmprunt setAfficheModale = {setAfficheModale} val ={true} /> */}
                 < Tb2 
                     myData = {myAllData}
                     setAfficheModale = {setAfficheModale}
                     setId = {setId2}
                 />
             </div>
-            < Stat 
-                    
-                />
+            < Stat />
             
             {afficheModale ? 
                 <ConfirmationModal 

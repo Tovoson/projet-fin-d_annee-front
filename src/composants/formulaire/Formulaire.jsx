@@ -16,6 +16,14 @@ const Formulaire = () => {
     const navigate = useNavigate()
     const MyParam = useParams()
     const MyId = MyParam.id
+    const [adminData, setAdminData] = useState(null);
+
+    useEffect(() => {
+        const storedAdmin = localStorage.getItem('admin');
+        if (storedAdmin) {
+        setAdminData(JSON.parse(storedAdmin));
+        }
+    }, []);
 
     const GetData = () =>{
         AxiosInstance.get(`materiel/${MyId}/`).then((res)=>{
@@ -46,7 +54,7 @@ const Formulaire = () => {
         AxiosInstance.post('materiel/',{
             nom_materiel: nom,
             nombre: qte,
-            id_admin: 1,
+            id_admin: adminData.id_admin,
             status: dispo
             }
         ).then(response => {
