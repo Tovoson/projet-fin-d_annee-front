@@ -94,7 +94,12 @@ const Mouvements = () => {
     
         if (!formData.matricule || !formData.nom || !formData.telephone || 
             !formData.date_debut || !formData.date_fin_prevu) {
+
             setError('Veuillez remplir tous les champs obligatoires');
+            setTimeout(() => {    
+                setError('');
+            }, 2000);
+
             setLoading(false);
             return;
         }

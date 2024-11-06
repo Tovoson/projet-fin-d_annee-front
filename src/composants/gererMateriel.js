@@ -27,7 +27,7 @@ export const creerUtilisation = async (donnees) => {
     }
 
     // 2. Vérifier si l'emprunt est possible
-    if (nombreDemande > nombreDisponible || nombreDemande <= 0) {
+    if (nombreDemande > nombreDisponible || nombreDemande <= 0 || nombreDisponible <= 0 ) {
     //   throw new Error('Nombre de matériel demandé non disponible');
       alert('Nombre de matériel demandé non disponible');
     }
@@ -76,7 +76,7 @@ export const gererRetour = async (idUtils) => {
     }
 
     // 1. Récupérer les informations de l'utilisation
-    const responseUtils = await AxiosInstance.get(`utilisation/${idUtils}`); // Modification du chemin
+    const responseUtils = await AxiosInstance.get(`utilisation/${idUtils}/`); // Modification du chemin
     const utilisation = responseUtils.data;
 
     if (!utilisation) {
@@ -84,25 +84,27 @@ export const gererRetour = async (idUtils) => {
     }
 
     // 2. Récupérer les informations du matériel
-    const responseMateriel = await AxiosInstance.get(`materiel/${utilisation.id_materiel}`); // Modification du chemin
+    const responseMateriel = await AxiosInstance.get(`materiel/${utilisation.id_materiel}/`); // Modification du chemin
     const materiel = responseMateriel.data;
 
     if (!materiel) {
       throw new Error('Matériel non trouvé');
     }
-
+    
+    console.log(materiel)
     // 3. Calculer le nouveau nombre
     const nouveauNombre = (parseInt(materiel.nombre) + parseInt(utilisation.nombre)).toString();
 
     // 4. Mettre à jour le matériel
-    await AxiosInstance.put(`materiel/${utilisation.id_materiel}`, { // Modification du chemin
-      ...materiel,
+    const {id_materiel, ...materiels} = materiel
+    await AxiosInstance.put(`materiel/${utilisation.id_materiel}/`, { // Modification du chemin
+      ...materiels,
       nombre: nouveauNombre,
       status: 'disponible'
     });
-
+    console.log('terminé pour le matériel à jour')
     // 5. Mettre à jour l'utilisation
-    await AxiosInstance.put(`utilisation/${idUtils}`, { // Modification du chemin
+    await AxiosInstance.put(`utilisation/${idUtils}/`, { // Modification du chemin
       ...utilisation,
       estRendu: true,
       dateRendu: new Date().toISOString()

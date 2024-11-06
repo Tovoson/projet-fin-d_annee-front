@@ -12,6 +12,7 @@ import jsPDF from 'jspdf';
 import AxiosInstance from '../Axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { gererRetour } from '../gererMateriel';
 
 
 const Tb2 = ({myData, setAfficheModale, setId, val}) => {
@@ -27,16 +28,12 @@ const Tb2 = ({myData, setAfficheModale, setId, val}) => {
     });
   }
   const handleRendu = (row) => {
-    AxiosInstance.put(`utilisation/${row.original.id_utils}/`,{
-      id_admin: row.original.id_admin,
-      id_materiel : row.original.id_materiel,
-      estRendu : true,
-      }
-      
-  ).then(response => {
+
+    const resultat = gererRetour(row.original.id_utils);
+
+    if (resultat.success) {
       navigate('../archive')
-      console.log('Réponse réussie:', response);
-      toast.success('Matériel ajouté avec succès !', {
+        toast.success('Matériel ajouté avec succès !', {
           autoClose: 3000, // Durée d'affichage en millisecondes
           hideProgressBar: false,
           closeOnClick: true,
@@ -44,7 +41,14 @@ const Tb2 = ({myData, setAfficheModale, setId, val}) => {
           draggable: true,
           progress: undefined,
       });
-  })
+      } else {
+        toast.error(resultat.message);
+      }
+  
+
+    
+
+    
   }
 
   const handleGeneratePdf = (row) => {
