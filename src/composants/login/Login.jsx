@@ -3,19 +3,21 @@ import './login.scss'
 import { Button } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import AxiosInstance from '../Axios'
-import { useLocalStorage } from '../../../useLocalStorage'
 
-const Login = () => {
+const Login = ({setAdmin, baseURL}) => {
     const [visibilite, setVisibilite] = useState(false)
     const [visibiliteReg, setVisibiliteReg] = useState(false)
     const [nom, setNom] = useState('')
     const [id, setId] = useState('')
     const [mdp, setMdp] = useState('')
     const [btn, setBtn] = useState(false)
-
-    const [logNom, setLogNom] = useLocalStorage("nom", '')
-
-    const [mdpLog, setMdpLog] = useLocalStorage("psd", '')
+    const [loading, setLoading] = useState(false);
+    
+  const [error, setError] = useState('');
+    
+  const [idAdmin, setIdAdmin] = useState('');
+  const [password, setPassword] = useState('');
+    
     
     const [avatar, setAvatar] = useState({
         file: null,
@@ -69,11 +71,34 @@ const Login = () => {
         setVisibiliteReg(!visibiliteReg)
     }
 
-    const handleLogin = () =>{
-        
-        // console.log(logNom + "Les formulaires")
-        // console.log(mdpLog + "Les formulaires")
-    }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+    
+        try {
+            const response = await AxiosInstance.post('admins/auth_admin/', {
+                id_admin: idAdmin,
+                mot_de_passe: password
+              });
+    
+          if (response.status === 200) {
+            const adminData = response.data;
+            // Construire l'URL complète pour la photo
+            if (adminData.photo_admin) {
+              adminData.photo_admin = `${baseURL}${adminData.photo_admin}`;
+            }
+            setAdmin(adminData);
+            localStorage.setItem('admin', JSON.stringify(adminData));
+          }
+        } catch (error) {
+          setError(error.response?.data?.error || 'Erreur lors de la connexion');
+          localStorage.removeItem('admin');
+          setAdmin(null);
+        } finally {
+          setLoading(false);
+        }
+      };
 
     return (
         <div className="login-page">
@@ -84,14 +109,14 @@ const Login = () => {
                         type="text" 
                         className='textIn' 
                         required
-                        onChange={ (e) => setLogNom(e.target.value) }
+                        onChange={ (e) => setIdAdmin(e.target.value) }
                     />
                     <div className="psd">
                         <input 
                             type={visibilite ? "text" :"password"} 
                             className="psd_champ"
                             required
-                            onChange={(e) => setMdpLog(e.target.value) }
+                            onChange={(e) => setPassword(e.target.value) }
                         />
                         <div onClick={handleClick}>
                             { visibilite 
@@ -100,7 +125,14 @@ const Login = () => {
                             }
                         </div>
                     </div>
-                    <Button variant='contained' onClick={ handleLogin }>Connexion</Button>
+                    <Button variant='contained' onClick={ handleLogin } disabled={loading}>
+                    {loading ? 'Connexion en cours...' : 'Se connecter'}
+                    </Button>
+                    {error && (
+                        <div className="p-3 text-sm text-red-600 bg-red-100 rounded-md">
+                        {error}
+                        </div>
+                    )}
                 </form>
             </div>
 {/* ---------------------------------------------------------------------------------------------------- */}
