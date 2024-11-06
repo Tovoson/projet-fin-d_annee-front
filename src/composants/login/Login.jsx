@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './login.scss'
 import { Button } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
@@ -24,52 +24,48 @@ const Login = ({setAdmin, baseURL}) => {
         url: ""
     })
 
-    const handleAvatar = (e) =>{
-        if (e.target.files[0]) {
-            setAvatar({
-                file: e.target.files[0],
-                url: URL.createObjectURL(e.target.files[0])
-            })
-        }
+  const handleAvatar = (e) => {
+    if (e.target.files[0]) {
+      setAvatar({
+        file: e.target.files[0],
+        url: URL.createObjectURL(e.target.files[0])
+      })
     }
+  }
 
-    const formData = new FormData();
-    formData.append('id_admin', id);
-    formData.append('nom_admin', nom);
-    formData.append('photo_admin', avatar.file);
-    formData.append('mot_de_passe', mdp);
+  const formData = new FormData();
+  formData.append('id_admin', id);
+  formData.append('nom_admin', nom);
+  formData.append('photo_admin', avatar.file);
+  formData.append('mot_de_passe', mdp);
 
-
-    const handleRegister = (e) =>{
-        e.preventDefault()
-        AxiosInstance.post('admins/',formData,{
-            headers: {
-                'Content-Type': 'multipart/form-data', 
-            },
-        }
-        ).then(response => {
-            console.log('données ajouté avec succès:', response);
-            setAvatar({
-                file: null,
-                url: ""
-            })
-       
-        })
-        .catch(error => {
-            console.log('Erreur:', error.response);  // Affiche les détails de l'erreur
-        });
-        console.log( "identification " + id, nom, mdp, avatar)
-            //  setBtn(true)
-            
+  const handleRegister = (e) => {
+    e.preventDefault()
+    AxiosInstance.post('admins/', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     }
+    ).then(response => {
+      console.log('données ajouté avec succès:', response);
+      setAvatar({
+        file: null,
+        url: ""
+      })
+    }).catch(error => {
+      console.log('Erreur:', error.response);  // Affiche les détails de l'erreur
+    });
+    console.log("identification " + id, nom, mdp, avatar)
+    setBtn(true)
+  }
 
-    const handleClick = () =>{
-        setVisibilite(!visibilite)
-    }
+  const handleClick = () => {
+    setVisibilite(!visibilite)
+  }
 
-    const handleClickReg = () =>{
-        setVisibiliteReg(!visibiliteReg)
-    }
+  const handleClickReg = () => {
+    setVisibiliteReg(!visibiliteReg)
+  }
 
     const handleLogin = async (e) => {
         e.preventDefault();

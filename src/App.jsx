@@ -17,12 +17,12 @@ import Archive from './composants/archive/Archive'
 import AxiosInstance from './composants/Axios'
 
 
-const Layout = () =>{
-  return(
+const Layout = () => {
+  return (
     <>
-      <Gauche/>
-      <Outlet/>
-      <Droite/>
+      <Gauche />
+      <Outlet />
+      <Droite />
     </>
   )
 }
@@ -105,7 +105,7 @@ function App() {
       ]
     }
   ]);
- 
+
   return (
     <div className='MyApp'>
       { admin 
