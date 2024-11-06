@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import './dashboard.scss'
 import Stat from '../stat/Stat'
 import Charts from './figure/Chart'
