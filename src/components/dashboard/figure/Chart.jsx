@@ -68,9 +68,7 @@ function Charts() {
   };
 
   useEffect(() => {
-    GetData1();
-    GetData2();
-    GetData3();
+    
   }, []);
 
   const options = {

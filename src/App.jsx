@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
-import "./App.scss";
-import Centre from "./composants/menuCentre/MenuAuCentre";
-import Droite from "./composants/menuDroite/MenuDroite";
-import Gauche from "./composants/menuGauche/MenuGauche";
+import "./App.css";
+import Content from "./components/Content/Content";
+import Sidebar from "./components/sidebar/Sidebar";
 import {
   createBrowserRouter,
   Navigate,
   Outlet,
   RouterProvider,
 } from "react-router-dom";
-import Formulaire from "./composants/formulaire/Formulaire";
-import Login from "./composants/login/Login";
-import Dashbords from "./composants/dashboard/Dashbord";
-import Mouvements from "./composants/mouvements/Mouvements";
-import Archive from "./composants/archive/Archive";
-import AxiosInstance from "./composants/Axios";
+import Formulaire from "./components/formulaire/Formulaire";
+import Login from "./components/auth/Login";
+import Dashbords from "./components/dashboard/Dashbord";
+import Mouvements from "./components/mouvements/Mouvements";
+import Archive from "./components/archive/Archive";
+import AxiosInstance from "./components/Axios";
+import { Toaster } from "react-hot-toast";
+import Register from "./components/auth/Register";
 
 const Layout = ({ setAdmin }) => {
   return (
     <>
-      <Gauche setAdmin={setAdmin} />
+      <Sidebar setAdmin={setAdmin} />
       <Outlet />
-      <Droite />
     </>
   );
 };
@@ -57,6 +57,10 @@ function App() {
       ),
     },
     {
+      path: "/register",
+      element: <Register />,
+    },
+    {
       path: "/",
       element: (
         <ProtectedRoute>
@@ -70,11 +74,11 @@ function App() {
         },
         {
           path: "/liste",
-          element: <Centre />,
+          element: <Content />,
         },
         {
           path: "/device",
-          element: <Centre />,
+          element: <Content />,
         },
         {
           path: "/ajoutMateriel",
@@ -102,12 +106,11 @@ function App() {
   ]);
 
   return (
-    <div className="MyApp">
-      {admin ? (
-        <RouterProvider router={router} />
-      ) : (
-        <Login setAdmin={setAdmin} baseURL={AxiosInstance.defaults.baseURL} />
-      )}
+    <div className="h-screen w-full flex">
+      <div>
+        <Toaster />
+      </div>
+      <RouterProvider router={router} />
     </div>
   );
 }

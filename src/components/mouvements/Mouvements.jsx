@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./mouvement.scss";
-import { Button } from "@mui/material";
-import TableauEmprunt from "../table/TableauEmp";
 import ConfirmationModal from "./modale/Modale";
 import Stat from "../stat/Stat";
-import AxiosInstance from "../Axios";
-import { toast, ToastContainer } from "react-toastify";
-import Example from "../table/Tableau";
 import Tb2 from "../table/TableauEmp";
 import { creerUtilisation } from "../gererMateriel";
+import Header from "../Header";
+import { tableauObjets } from "../../data/data";
+import { Button } from "@mui/material";
 
 const Mouvements = () => {
   const [afficheModale, setAfficheModale] = useState(false);
@@ -24,8 +21,8 @@ const Mouvements = () => {
     id_materiels: "",
   });
 
-  const [myData, setMyData] = useState();
-  const [myAllData, setAllMyData] = useState();
+  const [myData, setMyData] = useState(tableauObjets);
+  const [myAllData, setAllMyData] = useState(tableauObjets);
   const [Id, setId] = useState("");
   const [Id2, setId2] = useState(null);
   const [disabled, setDisabled] = useState(false);
@@ -59,17 +56,17 @@ const Mouvements = () => {
   };
 
   const GetAllData = () => {
-    AxiosInstance.get("utilisation/")
+    /* AxiosInstance.get("utilisation/")
       .then((res) => {
         setAllMyData(res.data.non_rendus);
       })
       .catch((error) => {
         console.error("Erreur dans GetAllData:", error);
-      });
+      }); */
   };
 
   const GetData = () => {
-    AxiosInstance.get("materiel/")
+    /*  AxiosInstance.get("materiel/")
       .then((res) => {
         setMyData(res.data);
         // Initialiser id_materiels avec le premier matériel si disponible
@@ -83,7 +80,9 @@ const Mouvements = () => {
       .catch((error) => {
         console.error("Erreur lors du chargement des matériels:", error);
         setError("Erreur lors du chargement des matériels");
-      });
+      }); */
+
+    setMyData(tableauObjets);
   };
 
   useEffect(() => {
@@ -152,34 +151,36 @@ const Mouvements = () => {
   };
 
   return (
-    <div className="contenu">
-      <div className="form">
-        <div className="element">
-          <div className="elem1">
+    <div className=" h-screen overflow-y-auto">
+      <Header />
+      <div className="w-auto m-5 pb-5 rounded-2xl shadow-md">
+        <div className="flex h-full items-center justify-around">
+          <div className="grid m-3 p-3 grid-rows-4 items-center justify-center gap-4 flex-col">
             <select
               id="device"
               name="id_materiels"
               value={formData.id_materiels}
               onChange={handleChange}
+              className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
             >
               {myData &&
                 myData.length > 0 &&
                 myData.map((myD) => (
-                  <option value={myD.id_materiel} key={myD.id_materiel}>
+                  <option value={myD.id} key={myD.id}>
                     {myD.nom_materiel}
                   </option>
                 ))}
             </select>
             <input
               type="datetime-local"
-              className="dates"
               name="date_debut"
               value={formData.date_debut}
               onChange={handleChange}
+              className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
             />
             <input
               type="datetime-local"
-              className="dates"
+              className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
               name="date_fin_prevu"
               value={formData.date_fin_prevu}
               onChange={handleChange}
@@ -190,17 +191,18 @@ const Mouvements = () => {
               name="nombre"
               value={formData.nombre}
               onChange={handleChange}
+              className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
             />
           </div>
-          {/* --------------------------- */}
-          {/* --------------------------- */}
-          <div className="elem2">
+
+          <div className="grid grid-col-4 gap-3 m-3 p-3">
             <input
               type="text"
               placeholder="Matricule"
               name="matricule"
               value={formData.matricule}
               onChange={handleChange}
+              className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
             />
             <input
               type="text"
@@ -208,12 +210,14 @@ const Mouvements = () => {
               name="nom"
               value={formData.nom}
               onChange={handleChange}
+              className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
             />
             <select
               id="device"
               name="niveau"
               value={formData.niveau}
               onChange={handleChange}
+              className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
             >
               <option value="L1">L1</option>
               <option value="L2">L2</option>
@@ -227,10 +231,11 @@ const Mouvements = () => {
               placeholder="telephone"
               value={formData.telephone}
               onChange={handleChange}
+              className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
             />
           </div>
         </div>
-        <div className="btn">
+        <div className="flex items-center justify-center gap-3">
           <Button variant="contained" onClick={handleSubmit}>
             {loading ? "En cours..." : "Valider"}
           </Button>
@@ -244,14 +249,17 @@ const Mouvements = () => {
         </div>
         {error && <div className="error-message">{error}</div>}
       </div>
-      <div className="tableau">
+      <div className="my-5 px-10">
         <Tb2
           myData={myAllData}
           setAfficheModale={setAfficheModale}
           setId={setId2}
         />
       </div>
+      <div className="my-5 px-10">
+
       <Stat />
+      </div>
 
       {afficheModale ? (
         <ConfirmationModal
@@ -263,7 +271,6 @@ const Mouvements = () => {
       ) : (
         ""
       )}
-      <ToastContainer />
     </div>
   );
 };

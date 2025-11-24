@@ -8,7 +8,7 @@ const Example = ({ myData, setAfficheModale, setId }) => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: "nom_materiel", //access nested data with dot notation
+        accessorKey: "nom", //access nested data with dot notation
         header: "materiel",
         size: 150,
       },

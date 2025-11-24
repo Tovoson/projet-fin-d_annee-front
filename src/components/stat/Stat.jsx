@@ -28,11 +28,7 @@ function Stat() {
     });
   };
 
-  useEffect(() => {
-    GetData1();
-    GetData2();
-    GetData3();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="composant1">

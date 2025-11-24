@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import "./formulaire.scss";
-import Recherche from "../recherche/Recherche";
 import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import AxiosInstance from "../Axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Header from "../Header";
 
 const Formulaire = () => {
   const [nom, setNom] = useState("");
@@ -113,15 +111,17 @@ const Formulaire = () => {
   };
 
   return (
-    <div className="m-formulaire">
-      <h1>{MyId ? "Modifier les matériels" : "ajouter Matériel"}</h1>
-      <div className="form">
-        <div className="inputs">
+    <div className="w-3/4 h-screen overflow-y-auto">
+      <Header titre={MyId ? "Modifier les matériels" : "ajouter Matériel"} />
+
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="flex items-center justify-center flex-col w-1/2 h-1/2 p-7 gap-5 shadow-2xl rounded-2xl">
           <input
             type="text"
             value={nom}
             onChange={(e) => setNom(e.target.value)}
             placeholder="Nom du matériel"
+            className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
           />
 
           <input
@@ -129,6 +129,7 @@ const Formulaire = () => {
             placeholder="nombre"
             value={qte}
             onChange={(e) => setQte(e.target.value)}
+            className="border border-gray-300 p-3 w-full shadow-md rounded-2xl focus:outline-none"
           />
 
           <select
@@ -136,10 +137,11 @@ const Formulaire = () => {
             name="device"
             value={dispo}
             onChange={(e) => setDispo(e.target.value)}
+            className="border border-gray-300 p-3 w-full shadow-md focus:outline-none"
           >
             <option value="disponible">Disponible</option>
-            {/* <option value="utilise">Utilisé</option>
-                        <option value="rendu">Rendu</option> */}
+            <option value="utilise">Utilisé</option>
+            <option value="rendu">Rendu</option>
           </select>
           <Button
             variant="contained"
